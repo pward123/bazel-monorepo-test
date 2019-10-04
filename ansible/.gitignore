@@ -1,0 +1,7 @@
+/galaxy_roles/*
+!/galaxy_roles/.keep
+
+/tmp/*
+!/tmp/.keep
+
+/.password

@@ -1,0 +1,17 @@
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "lib",
+    srcs = ["index.js"],
+)
+
+nodejs_binary(
+    name = "test_app",
+    data = [
+        ":lib",
+        "//test_lib",
+    ],
+    entry_point = "index.js"
+)

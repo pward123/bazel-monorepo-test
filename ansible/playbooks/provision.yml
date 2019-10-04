@@ -1,0 +1,8 @@
+#
+# Provisions the vagrant vm for development
+#
+- hosts: all
+  roles:
+    - ANXS.build-essential
+    - geerlingguy.nodejs
+    - savi.bazel

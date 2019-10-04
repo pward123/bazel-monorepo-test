@@ -1,0 +1,11 @@
+---
+# - src: jnv.unattended-upgrades
+
+- src: ANXS.build-essential
+- src: geerlingguy.nodejs
+
+# - src: kbrebanov.git
+
+# - src: angstwad.docker_ubuntu
+
+# - src: anthony25.systemd-networkd
