@@ -1,3 +1,5 @@
+FIXED!
+
 When I run `bazel run //test_app` from the `packages` folder I get the following error
 ```
 Error: Cannot find module 'test_lib'. Please verify that the package.json has a valid "main" entry
