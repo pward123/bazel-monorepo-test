@@ -9,9 +9,9 @@ filegroup(
 
 nodejs_binary(
     name = "test_app",
+    entry_point = "index.js",
     data = [
         ":lib",
         "//test_lib",
     ],
-    entry_point = "index.js"
 )

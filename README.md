@@ -1,4 +1,4 @@
-When I run `bazel run //test_app` I get the following error
+When I run `bazel run //test_app` from the `packages` folder I get the following error
 ```
 Error: Cannot find module 'test_lib'. Please verify that the package.json has a valid "main" entry
     at Function.module.constructor._resolveFilename (/home/vagrant/.cache/bazel/_bazel_vagrant/7496fcdb99433a7070ef329a079c1cbd/execroot/sql_rest_base/bazel-out/k8-fastbuild/bin/test_app/test_app_loader.js:485:17)
