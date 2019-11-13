@@ -1,0 +1,14 @@
+{
+  "sourceMaps": "inline",
+  "comments": false,
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": true
+        }
+      }
+    ]
+  ]
+}

@@ -1,17 +1,43 @@
+load("@npm//@babel/cli:index.bzl", "babel")
 load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
 
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "lib",
+    name = "srcs",
     srcs = ["index.js"],
+)
+
+rollup_bundle(
+    name = "bundle",
+    deps = [":srcs"],
+    sourcemap = "inline",
+    entry_point = "index.js",
+)
+
+babel(
+    name = "bundle_transpiled",
+    data = [
+        ":bundle",
+        "//:node.babelrc",
+        "@npm//@babel/preset-env",
+    ],
+    outs = ["bundle_transpiled.js"],
+    args = [
+        "$(location :bundle)",
+        "--config-file",
+        "$(location //:node.babelrc)",
+        "--out-file",
+        "$(location bundle_transpiled.js)",
+    ],
 )
 
 nodejs_binary(
     name = "test_app",
-    entry_point = "index.js",
+    entry_point = ":bundle_transpiled",
     data = [
-        ":lib",
+        ":bundle_transpiled",
         "//test_lib",
     ],
 )

@@ -1,16 +1,43 @@
+load("@npm//@babel/cli:index.bzl", "babel")
 load("@build_bazel_rules_nodejs//:defs.bzl", "npm_package")
 load("//devops_bazel/js_library:defs.bzl", "js_library")
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
 
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "lib",
+    name = "srcs",
     srcs = ["index.js"],
+)
+
+rollup_bundle(
+    name = "bundle",
+    deps = [":srcs"],
+    sourcemap = "inline",
+    entry_point = "index.js",
+)
+
+babel(
+    name = "bundle_transpiled",
+    data = [
+        ":bundle",
+        "//:node.babelrc",
+        "@npm//@babel/preset-env",
+    ],
+    outs = ["bundle_transpiled.js"],
+    args = [
+        "$(location :bundle)",
+        "--config-file",
+        "$(location //:node.babelrc)",
+        "--out-file",
+        "$(location bundle_transpiled.js)",
+    ],
 )
 
 js_library(
     name = "test_lib",
-    srcs = [":lib"],
+    srcs = [":bundle_transpiled"],
     deps = ["package.json"],
-    module_name = "test_lib"
+    module_name = "@savicontrols/test_lib",
+    module_root = "bundle_transpiled.js",
 )

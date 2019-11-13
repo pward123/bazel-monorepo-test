@@ -1,4 +1,4 @@
-const lib = require('test_lib')
+import lib from '@savicontrols/test_lib'
 
 const main = async () => {
     console.log('calling test_lib')
