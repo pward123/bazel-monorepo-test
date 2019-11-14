@@ -34,10 +34,19 @@ babel(
 )
 
 nodejs_binary(
-    name = "test_app",
+    name = "works",
     entry_point = ":bundle_transpiled",
     data = [
         ":bundle_transpiled",
-        "//test_lib",
+        "//test_lib:test_lib_works",
+    ],
+)
+
+nodejs_binary(
+    name = "broke",
+    entry_point = ":bundle_transpiled",
+    data = [
+        ":bundle_transpiled",
+        "//test_lib:test_lib_broke",
     ],
 )
