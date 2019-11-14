@@ -10,34 +10,44 @@ filegroup(
     srcs = ["index.js"],
 )
 
-rollup_bundle(
-    name = "bundle",
-    deps = [":srcs"],
-    sourcemap = "inline",
-    entry_point = "index.js",
-)
+# rollup_bundle(
+#     name = "bundle",
+#     deps = [":srcs"],
+#     sourcemap = "inline",
+#     entry_point = "index.js",
+# )
 
-babel(
-    name = "bundle_transpiled",
-    data = [
-        ":bundle",
-        "//:node.babelrc",
-        "@npm//@babel/preset-env",
-    ],
-    outs = ["bundle_transpiled.js"],
-    args = [
-        "$(location :bundle)",
-        "--config-file",
-        "$(location //:node.babelrc)",
-        "--out-file",
-        "$(location bundle_transpiled.js)",
-    ],
-)
+# babel(
+#     name = "bundle_transpiled",
+#     data = [
+#         ":bundle",
+#         "//:node.babelrc",
+#         "@npm//@babel/preset-env",
+#     ],
+#     outs = ["bundle_transpiled.js"],
+#     args = [
+#         "$(location :bundle)",
+#         "--config-file",
+#         "$(location //:node.babelrc)",
+#         "--out-file",
+#         "$(location bundle_transpiled.js)",
+#     ],
+# )
 
+# NOTE: This is NOT the rules_nodejs internal js_library
 js_library(
-    name = "test_lib",
-    srcs = [":bundle_transpiled"],
+    name = "test_lib_works",
+    srcs = [":srcs"],
     deps = ["package.json"],
-    module_name = "@savicontrols/test_lib",
-    module_root = "bundle_transpiled.js",
+    module_name = "test_lib",
+    # srcs = [":bundle_transpiled"],
+    # module_root = "bundle_transpiled.js",
+)
+
+npm_package(
+    name = "test_lib_broke",
+    srcs = ["package.json", ":srcs"],
+    # deps = [":srcs"],
+    # deps = [":bundle_transpiled"],
+    # replacements = {"blah": "bloop"},
 )
